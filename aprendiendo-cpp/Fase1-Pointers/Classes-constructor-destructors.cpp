@@ -26,16 +26,26 @@ public:
         cout << nombre << " desaparece" << endl;
     }
 
+    bool estaVivo() const {
+        return vida > 0;
+    }
+
     void atacar(Enemigo& otro) {
+        if (!estaVivo()) {
+            return;
+        }
         otro.recibirDanio(ataque);
     }
 
     void recibirDanio(int danio) {
         vida = vida - danio;
         cout << nombre << " recibio: " << danio << endl;
-        if (vida < 0) {
+        if (vida <= 0) {
+
             vida = 0;
             
+            cout << nombre << " murio" << endl;
+
         }
     }
 
@@ -46,27 +56,13 @@ public:
         }
     }
 
-    void mostrar() {
+    void mostrar() const{
         cout << "Vida de " << nombre << ": " << vida<<endl;
         
     }
 
-    bool estaVivo() const {   
-        if (vida > 0) {
-            return vida > 0;
-        }
-        else {
-            cout << "murio" << endl;
-        }
-
-    }
-    bool estaMuerto() {
-        if (vida <= 0) {
-            vida = 0;
-            cout << "murio" << endl;
-        }
-        return vida;
-    }
+  
+  
     
 
 };
@@ -115,32 +111,31 @@ public:
 
 
 int main() {
-    //Enemigo goblin("Goblin", 60);   // imprime "Goblin aparece"
-    //Enemigo Ogro("Ogro", 90);
+    Enemigo goblin("Goblin", 90, 60);   // imprime "Goblin aparece"
+    Enemigo Ogro("Ogro", 130, 90);
 
-    //goblin.recibirDanio(30);
-    //goblin.mostrar();
-
-    //Ogro.recibirDanio(50);
-    //Ogro.mostrar();
-
-    //goblin.recibirDanio(30);
-    //goblin.mostrar();
-
-    //goblin.recibirDanio(30);
-    //Ogro.mostrar();
-
-    //goblin.estaMuerto();
+    while (Ogro.estaVivo() && goblin.estaVivo()) {
+                
+        
+        Ogro.atacar(goblin);
+        goblin.atacar(Ogro);
+        
+        
+    }
 
 
-    int cant;
-    cout << "ingresa la cantidad de enemigos: ";
-    cin >> cant;
+    //int cant;
+    //cout << "ingresa la cantidad de enemigos: ";
+    //cin >> cant;
 
 
-    EnemyGenerator enemigos(cant);
-    enemigos.mostrar();
-    cout << "El enemigo mas fuerte es el #" << enemigos.indiceMasFuerte() + 1 << endl;
+    //EnemyGenerator enemigos(cant);
+    //enemigos.mostrar();
+    //cout << "El enemigo mas fuerte es el #" << enemigos.indiceMasFuerte() + 1 << endl;
+       
+}
+
+
        
 }
 
